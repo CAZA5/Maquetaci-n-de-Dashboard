@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard ML</title>
+
+  <!-- Tailwind + Configuración de colores personalizada -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ml: {
+              yellow: '#ffe600',
+              blue: '#0033a0',
+              light: '#f5f5f5',
+              dark: '#333',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-ml-light min-h-screen p-6 text-ml-dark font-sans">
+
+  <h1 class="text-3xl font-bold mb-6 text-center text-ml-blue">📈 Dashboard Mercado Libre</h1>
+
+  <!-- 🔹 Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-2xl shadow-md p-4 text-center border-t-4 border-ml-yellow">
+      <h2 class="text-sm text-gray-600">Usuarios Totales</h2>
+      <p class="text-2xl font-bold text-ml-blue">9,100</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-md p-4 text-center border-t-4 border-ml-yellow">
+      <h2 class="text-sm text-gray-600">Ingresos Totales</h2>
+      <p class="text-2xl font-bold text-green-600">$290,000</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-md p-4 text-center border-t-4 border-ml-yellow">
+      <h2 class="text-sm text-gray-600">Usuarios Activos</h2>
+      <p class="text-2xl font-bold text-yellow-600">2,450</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-md p-4 text-center border-t-4 border-ml-yellow">
+      <h2 class="text-sm text-gray-600">Visitas del Mes</h2>
+      <p class="text-2xl font-bold text-purple-600">15,300</p>
+    </div>
+  </div>
+
+  <!-- 🔹 Gráficas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white rounded-2xl shadow-md p-4 h-96">
+      <h2 class="text-xl font-semibold text-ml-blue mb-2">Usuarios por mes</h2>
+      <canvas id="lineChart" class="w-full h-full"></canvas>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-md p-4 h-96">
+      <h2 class="text-xl font-semibold text-ml-blue mb-2">Ingresos por mes</h2>
+      <canvas id="barChart" class="w-full h-full"></canvas>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const lineCtx = document.getElementById('lineChart').getContext('2d');
+      new Chart(lineCtx, {
+        type: 'line',
+        data: {
+          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+          datasets: [{
+            label: 'Usuarios 2024',
+            data: [5000, 5500, 6000, 6200, 6800, 7200, 7500, 8000, 8249, 8500, 8800, 9100],
+            borderColor: '#0033a0',
+            backgroundColor: 'rgba(0, 51, 160, 0.1)',
+            tension: 0.3,
+            fill: true
+          }, {
+            label: 'Usuarios 2023',
+            data: [4000, 4200, 4500, 4800, 5100, 5400, 5600, 5900, 6200, 6500, 6800, 7000],
+            borderColor: '#999',
+            backgroundColor: 'rgba(153, 153, 153, 0.1)',
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top' }
+          },
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+
+      const barCtx = document.getElementById('barChart').getContext('2d');
+      new Chart(barCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+          datasets: [{
+            label: 'Ingresos 2024 ($)',
+            data: [15000, 16500, 18000, 19500, 21000, 22500, 23000, 24000, 24780, 26000, 27500, 29000],
+            backgroundColor: '#ffe600'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top' }
+          },
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
